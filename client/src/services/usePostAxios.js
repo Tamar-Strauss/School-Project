@@ -12,6 +12,7 @@ export async function signUp(url, obj) {
 }
 
 export async function UseCreate(url, obj) {
+    debugger
     const headersAuthorization = {headers: {Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`}}
     try {
         const res = await axios.post(`${URL}/${url}`, obj, headersAuthorization)

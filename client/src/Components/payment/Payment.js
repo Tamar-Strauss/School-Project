@@ -15,19 +15,20 @@ const Payment = () => {
             registerDate: new Date(),
             nextLectureNum: 1
         }
+
         const register = async () => {
             const res = await UseCreate('course_students', obj);
             if (res.status == 201) {
                 console.log('נרשמת בהצלחה');
-                navigate('/student/courses')
+                navigate('/courses/students/my-courses')
             }
             else {
                 console.log(res.response.data.message);
                 navigate('/courses')
 
             }
-            register();
         }
+        register();
     }
     console.log(courseId);
 

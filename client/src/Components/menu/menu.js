@@ -29,7 +29,40 @@ export default function Menu(props) {
     }, []);
 
     const items = [
-        // ... (existing menu items)
+        {
+            label: "Home",
+            icon: 'pi pi-home',
+            command: () => userInfo.status === 'teachers' ? navigate('/home-teachers') : navigate('/home-students')
+        },
+        {
+            label: "Courses",
+            icon: 'pi pi-book',
+            command: () => navigate('/courses')
+        },
+        {
+            label: "My Courses",
+            icon: 'pi pi-bookmark',
+            command: () => navigate(`/courses/${userInfo.status}/my-courses`)
+        },
+        {
+            label: "Profile",
+            icon: 'pi pi-user',
+            items: [
+                {
+                    label: userName,
+                    icon: userIcon
+                },
+                {
+                    label: 'Logout',
+                    icon: 'pi pi-sign-out',
+                    command: () => {
+
+                        localStorage.clear();
+                        navigate('/');
+                    }
+                }
+            ]
+        }
     ];
 
     const start = <img alt="logo" src={icon} height="40" className="mr-2"></img>;

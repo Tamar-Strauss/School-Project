@@ -12,13 +12,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { UseCreate } from '../../services/usePostAxios';
 import { UseGetOneByParmas } from '../../services/useGetAxios';
 import '../lecture/uploadLectures'
+import Menu from '../menu/menu';
 
 
 export default function AddCourse(props) {
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
-    const [message, setMessage] = useState(<></>);
+    // const [showErrorMessage, setShowErrorMessage] = useState(false);
+    // const [errorMessage, setErrorMessage] = useState('');
+    // const [showMessage, setShowMessage] = useState(false);
+    // const [message, setMessage] = useState(<></>);
     const [formData, setFormData] = useState({});
 
     const validate = (data) => {
@@ -29,9 +30,9 @@ export default function AddCourse(props) {
         if (!data.name) {
             errors.name = 'name is required.';
         }
-        if (!data.accessPeriod) {
-            errors.accessPeriod = 'period is required.';
-        }
+        // if (!data.accessPeriod) {
+        //     errors.accessPeriod = 'period is required.';
+        // }
         if (!data.description) {
             errors.description = 'description is required.';
 
@@ -47,8 +48,8 @@ export default function AddCourse(props) {
 
     const onSubmit = async (data, form) => {
         setFormData(data);
-        setShowMessage(true);
-        setShowErrorMessage(false);
+        // setShowMessage(true);
+        // setShowErrorMessage(false);
         form.restart();
         await HandleClick(data);
     };
@@ -58,12 +59,12 @@ export default function AddCourse(props) {
         return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
     };
 
-    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => { setShowMessage(false); }} /></div>;
-    const errorDialodFooter = <div className='flex justify-content-center'><Button label='OK' className='p-button-text' autoFocus onClick={() => { setShowErrorMessage(false); }}
-    />
+    // const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => { setShowMessage(false); }} /></div>;
+    // const errorDialodFooter = <div className='flex justify-content-center'><Button label='OK' className='p-button-text' autoFocus onClick={() => { setShowErrorMessage(false); }}
+    // />
 
 
-    </div>;
+    // </div>;
     const passwordHeader = <h6>Pick a password</h6>;
     const passwordFooter = (
         <React.Fragment>
@@ -81,64 +82,69 @@ export default function AddCourse(props) {
 
 
     async function HandleClick(data) {
-        const teacherId = JSON.parse(localStorage.getItem('userInfo')).id;//!!!!!!!check
-        console.log(localStorage.getItem('userInfo'));
-        const obj = {
-            name: data.name,
-            teacherId: teacherId,
-            description: data.description,
-            categoryId: data.categoryId,
-            accessPeriod: data.accessPeriod,
-            price: data.price,
-            numOfLecture: data.numOfLecture
-        }
-        if (JSON.parse(localStorage.getItem('userInfo')).status) {
-            const res = await UseCreate('courses', obj);
-            console.log(res);
-            const courseId = res.data.id;
-            const numLectures = data.numOfLecture;
-            console.log(numLectures);
-            if (res.status && res.status === 200) {
-                setMessage(<>
-                    <h5>create course</h5>
-                    <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                        <b>
-                            <Button label="payment" className="mt-2" text onClick={() => navigate(`/addCourse/payment/${numLectures}`)} />
-                        </b><br />
-                    </p>
-                </>)
-                setShowMessage(true);
-            }
+            localStorage.setItem('courseData', JSON.stringify(data)); // שמירה של נתוני הקורס ב-localStorage
+            navigate(`/addCourse/payment/${ data.numOfLecture}`);
 
-            else if (res.status && res.status === 201) {
-                setMessage(<>
-                    <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>There is already a course with the same name.<br /></p>
-                </>)
-                setShowErrorMessage(true);
-            }
-            // why - ??? it still does not work out.
-            else if (res.response && res.response.data.message === 'Duplicate student') {
-                setMessage(<>
-                    <h5>You Are Signed Up already!</h5>
-                </>)
-            }
-            else {
-                setErrorMessage(res.message);
-                setShowErrorMessage(true);
-            }
-        }
-        else {
-            setMessage(<>
-                <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>Sorry, you don't have permission<br /></p>
-            </>)
-            setShowErrorMessage(true);
-        }
+        // const teacherId = JSON.parse(localStorage.getItem('userInfo')).id;//!!!!!!!check
+        // console.log(localStorage.getItem('userInfo'));
+        // const obj = {
+        //     name: data.name,
+        //     teacherId: teacherId,
+        //     description: data.description,
+        //     categoryId: data.categoryId,
+        //     accessPeriod: data.accessPeriod,
+        //     price: data.price,
+        //     numOfLecture: data.numOfLecture
+        // }
+        // if (JSON.parse(localStorage.getItem('userInfo')).status) {
+        //     const res = await UseCreate('courses', obj);
+        //     console.log(res);
+        //     const courseId = res.data.id;
+        //     const numLectures = data.numOfLecture;
+        //     console.log(numLectures);
+        //     if (res.status && res.status === 200) {
+        //         setMessage(<>
+        //             <h5>create course</h5>
+        //             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
+        //                 <b>
+        //                     <Button label="payment" className="mt-2" text onClick={() => navigate(`/addCourse/payment/${numLectures}`)} />
+        //                 </b><br />
+        //             </p>
+        //         </>)
+        //         setShowMessage(true);
+        //     }
+
+        //     else if (res.status && res.status === 201) {
+        //         setMessage(<>
+        //             <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>There is already a course with the same name.<br /></p>
+        //         </>)
+        //         setShowErrorMessage(true);
+        //     }
+        //     // why - ??? it still does not work out.
+        //     else if (res.response && res.response.data.message === 'Duplicate student') {
+        //         setMessage(<>
+        //             <h5>You Are Signed Up already!</h5>
+        //         </>)
+        //     }
+        //     else {
+        //         setErrorMessage(res.message);
+        //         setShowErrorMessage(true);
+        //     }
+        // }
+        // else {
+        //     setMessage(<>
+        //         <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>Sorry, you don't have permission<br /></p>
+        //     </>)
+        //     setShowErrorMessage(true);
+        // }
     }
 
 
 return (
+<>            
+<Menu /><br></br>
     <div className="form-demo">
-        <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+        {/* <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
             <div className="flex align-items-center flex-column pt-6 px-3">
                 <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
                 {message}
@@ -152,7 +158,7 @@ return (
                     {message}
                 </p>
             </div>
-        </Dialog>
+        </Dialog> */}
         <div className="flex justify-content-center">
             <div className="card">
                 <h2 className="text-center">Add Course</h2>
@@ -168,7 +174,7 @@ return (
                                 {getFormErrorMessage(meta)}
                             </div>
                         )} />
-                        <Field name="category" render={({ input, meta }) => (
+                        {/* <Field name="category" render={({ input, meta }) => (
                             <div className="field">
                                 <span className="p-float-label">
                                     <InputText id="categoryId" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
@@ -176,8 +182,8 @@ return (
                                 </span>
                                 {getFormErrorMessage(meta)}
                             </div>
-                        )} />
-                        <Field name="accessPeriod" render={({ input, meta }) => (
+                        )} /> */}
+                        {/* <Field name="accessPeriod" render={({ input, meta }) => (
                             <div className="field">
                                 <span className="p-float-label">
                                     <InputText id="accessPeriod" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
@@ -185,7 +191,7 @@ return (
                                 </span>
                                 {getFormErrorMessage(meta)}
                             </div>
-                        )} />
+                        )} /> */}
                         <Field name="numOfLecture" render={({ input, meta }) => (
                             <div className="field">
                                 <span className="p-float-label">
@@ -228,6 +234,6 @@ return (
                 )} />
             </div>
         </div>
-    </div>
+    </div></>
 );
 }

@@ -14,22 +14,22 @@ export default function HomeStudent() {
   const navigate = useNavigate();
 
   const images = [
-    {
-      url: exams,
-      title: 'Exam',
-      width: '33%',
-      nav: '/tests'
-    },
+    // {
+    //   url: exams,
+    //   title: 'Exam',
+    //   width: '33%',
+    //   nav: '/tests'
+    // },
     {
       url: learning,
       title: 'Learning - My Courses',
-      width: '34%',
+      width: '50%',
       nav: `/courses/students/my-courses`
     },
     {
       url: courses,
       title: 'Courses',
-      width: '33%',
+      width: '50%',
       nav: '/courses'
     },
   ];
@@ -117,20 +117,24 @@ export default function HomeStudent() {
               <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
               <ImageBackdrop className="MuiImageBackdrop-root" />
               <Image>
-                <Typography
-                  component="span"
-                  variant="subtitle1"
-                  color="inherit"
-                  sx={{
-                    position: 'relative',
-                    p: 4,
-                    pt: 2,
-                    pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                  }}
-                >
-                  {image.title}
-                  <ImageMarked className="MuiImageMarked-root" />
-                </Typography>
+                        <Typography
+            component="span"
+            variant="subtitle1"
+            color="inherit"
+            sx={{
+              position: 'relative',
+              p: 4,
+              pt: 2,
+              pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+              fontSize: '1.5rem', // גודל הגופן
+              fontWeight: 'bold', // הדגשה
+              textShadow: '2px 2px 5px rgba(0, 0, 0, 0.5)', // הצללה לטקסט
+              letterSpacing: '0.1rem', // ריווח בין אותיות (אופציונלי)
+            }}
+          >
+            {image.title}
+            <ImageMarked className="MuiImageMarked-root" />
+          </Typography>
               </Image>
             </ImageButton>
           ))}

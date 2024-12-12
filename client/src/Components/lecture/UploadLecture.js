@@ -19,10 +19,10 @@ export default function UploadLecture(props) {
     const { courseId } = useParams();
 
     const [uploaded, setUploaded] = useState(false);
-    const [encoded, setEncoded] = useState(false);
-    const [base64data, setBase64Data] = useState("");
+    // const [encoded, setEncoded] = useState(false);
+    // const [base64data, setBase64Data] = useState("");
     const [lectureNum, setLectureNum] = useState(1);
-    const [src, setSrc] = useState("");
+    // const [src, setSrc] = useState("");
 
     const [vid, setVid] = useState();
 
@@ -37,49 +37,49 @@ export default function UploadLecture(props) {
         fetchData();
     }, [])
 
-    useEffect(() => {
-        if (base64data != "") {
-            setEncoded(true);
-        }
-    }, [base64data])
+    // useEffect(() => {
+    //     if (base64data != "") {
+    //         setEncoded(true);
+    //     }
+    // }, [base64data])
 
-    const customBase64Uploader = async (event) => {
-        // convert file to base64 encoded
-        const file = event.files[0];
-        const reader = new FileReader();
-        let blob = await fetch(file.objectURL).then((r) => r.blob()); //blob:url
-        reader.readAsDataURL(blob);
-        reader.onloadend = function () {
-            setBase64Data(reader.result);
-        }
-        console.log(base64data);
-        handleUpload();
-    }
+    // const customBase64Uploader = async (event) => {
+    //     // convert file to base64 encoded
+    //     const file = event.files[0];
+    //     const reader = new FileReader();
+    //     let blob = await fetch(file.objectURL).then((r) => r.blob()); //blob:url
+    //     reader.readAsDataURL(blob);
+    //     reader.onloadend = function () {
+    //         setBase64Data(reader.result);
+    //     }
+    //     console.log(base64data);
+    //     handleUpload();
+    // }
 
 
-    const handle = (event) => {
-        try {
-            // Get the uploaded file
-            const file = event.files[0];
-            // Transform file into blob URL
-            setSrc(URL.createObjectURL(file));
+    // const handle = (event) => {
+    //     try {
+    //         // Get the uploaded file
+    //         const file = event.files[0];
+    //         // Transform file into blob URL
+    //         setSrc(URL.createObjectURL(file));
 
-            const reader = new FileReader();
-            reader.onload = () => {
-                console.log(reader.result);
-                // setSrc(reader.result);
-                // const blob = window.dataURLToBlob(reader.result);
-            }
-            reader.readAsDataURL(file);
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             console.log(reader.result);
+    //             // setSrc(reader.result);
+    //             // const blob = window.dataURLToBlob(reader.result);
+    //         }
+    //         reader.readAsDataURL(file);
 
-            if (src != "") {
-                setEncoded(true);
-                handleUpload();
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    //         if (src != "") {
+    //             setEncoded(true);
+    //             handleUpload();
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
     const handleUpload = async () => {
         // if (encoded) {
@@ -96,20 +96,20 @@ export default function UploadLecture(props) {
         }
     }
 
-    const tryfunc = () => {
-        setSrc(URL.createObjectURL(vid));
+    // const tryfunc = () => {
+    //     setSrc(URL.createObjectURL(vid));
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            console.log(reader.result);
-            // setSrc(reader.result);
-            // const blob = window.dataURLToBlob(reader.result);
-        }
-        reader.readAsDataURL(vid);
-    }
-    const show = () => {
-        Toast.current.show({ severity: 'success', summary: 'Form Submitted', detail: formik.values.value });
-    };
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => {
+    //         console.log(reader.result);
+    //         // setSrc(reader.result);
+    //         // const blob = window.dataURLToBlob(reader.result);
+    //     }
+    //     reader.readAsDataURL(vid);
+    // }
+    // const show = () => {
+    //     Toast.current.show({ severity: 'success', summary: 'Form Submitted', detail: formik.values.value });
+    // };
 
     const formik = useFormik({
         initialValues: {
@@ -125,7 +125,7 @@ export default function UploadLecture(props) {
             return errors;
         },
         onSubmit: (data) => {
-            data && show(data);
+            // data && show(data);
             handleUpload()
             formik.resetForm();
         }
@@ -140,13 +140,13 @@ export default function UploadLecture(props) {
 
         <Menu></Menu>
         <h2>Upload Lecture #{lectureNum}</h2>
-        {!uploaded && <FileUpload
+        {/* {!uploaded && <FileUpload
             name="demo[]"
             multiple accept="video/*"
             customUpload
             uploadHandler={handle}
             maxFileSize={1000000000}
-            emptyTemplate={<p className="m-0">Drag and drop video to here to upload.</p>} />}
+            emptyTemplate={<p className="m-0">Drag and drop video to here to upload.</p>} />} */}
         <br></br>
         <div className="card flex justify-content-center">
             {!uploaded && <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
@@ -165,9 +165,9 @@ export default function UploadLecture(props) {
                 </span>
                 {getFormErrorMessage('value')}
                 <Button type="submit" label="save" /> </form>}
-            {uploaded && <Message severity='success' text='Uploaded' />}
+            {uploaded && <Message severity='success' text='Video saved successfully' />}
             {uploaded && console.log(formik.values.value)}
-            {uploaded &&
+            {/* {uploaded &&
                 <ReactPlayer
                     className="player"
                     url={formik.values.value}
@@ -175,7 +175,7 @@ export default function UploadLecture(props) {
                     origin='http://localhost:3000'
                     controls>
                 </ReactPlayer>
-            }
+            } */}
         </div>
 
     </>)

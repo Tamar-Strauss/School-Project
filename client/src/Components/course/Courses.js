@@ -91,11 +91,14 @@ const Courses = (props) => {
                     <div className="flex align-items-center justify-content-between">
                         <span className="text-2xl font-semibold">{course.price} $</span>
                         {status == 'students' &&
-                            <Button
-                                icon="pi pi-shopping-cart"
-                                className="p-button-rounded"
-                                onClick={(e) => { console.log('PayMENT'); navigate(`/payment/${course.id}`); }}
-                            ></Button>}
+                           <Button
+                           label="מעבר להרשמה ותשלום על הקורס"
+                           className="p-button-primary"
+                           onClick={(e) => { 
+                               console.log('PayMENT'); 
+                               navigate(`/payment/${course.id}`); 
+                           }}
+                       />}
                     </div>
                 </div>
             </div>
